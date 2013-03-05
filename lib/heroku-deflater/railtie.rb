@@ -4,8 +4,8 @@ require 'heroku-deflater/skip_binary'
 module HerokuDeflater
   class Railtie < Rails::Railtie
     initializer "heroku_deflater.configure_rails_initialization" do |app|
-      app.middleware.insert_before ActionDispatch::Static, Rack::Deflater
-      app.middleware.insert_before ActionDispatch::Static, HerokuDeflater::SkipBinary
+      app.middleware.insert_before Rack::Cache, Rack::Deflater
+      app.middleware.insert_before Rack::Cache, HerokuDeflater::SkipBinary
     end
 
     # Set default Cache-Control headers to one week.
